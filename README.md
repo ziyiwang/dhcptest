@@ -1,3 +1,15 @@
+## dhcptest with relayAgent Information
+an extension to Cybershadow's version, to support option 82 sub options example as follows:
+
+./dhcptest --query --option "82=1.3.12.32.15"
+
+1 -------> suboption 1
+3 -------> suboption length
+12.32.15 -----> circuit id
+
+will refine syntax later one, current version is to enable testing
+
+
 ## dhcptest
 
 This is a DHCP test tool. It can send DHCP discover packets, and listen for DHCP replies.
