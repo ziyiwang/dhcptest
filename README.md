@@ -4,7 +4,7 @@ an extension to Cybershadow's version, to support option 82 sub options example 
 ./dhcptest --query --option "82=1.3.12.32.15"
 
 1 -------> suboption 1
-3 -------> suboption length
+3 -------> suboption length \n
 12.32.15 -----> circuit id
 
 will refine syntax later one, current version is to enable testing
