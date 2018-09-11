@@ -9,6 +9,31 @@ an extension to Cybershadow's version, to support option 82 sub options example 
 
 will refine syntax later one, current version is to enable testing
 
+sample generated packet capture from Cisco PNR:
+Generetaed circuit ID
+
+R1329: ----- RECEIVED -- R1329 -----
+R1329: -> port = 68 received from = 10.183.16.155
+R1329: -> packet length = 251
+R1329: -> op = 1 request
+R1329: -> htype = 1 ethernet hlen = 6
+R1329: -> hops = 0
+R1329: -> xid = 0x36e902a5 secs = 0 flags = 0x8000 broadcast
+R1329: -> ciaddr = 0.0.0.0
+R1329: -> yiaddr = 0.0.0.0
+R1329: -> siaddr = 0.0.0.0
+R1329: -> giaddr = 10.183.16.155
+R1329: -> chaddr = 7b:0b:78:74:7f:81
+R1329: -> dhcp-message-type = DHCPDISCOVER
+R1329: -> relay-agent-info = 01:03:0c:20:0f
+R1329: -> circuit-id 1 0c:20:0f
+R1329: -> end
+R1329: -> sname = ""
+R1329: -> file = ""
+R1329: ----- END OF RECEIVED -- R1329 -----
+
+
+
 
 ## dhcptest
 
