@@ -25,6 +25,7 @@ import std.stdio;
 import std.string;
 import std.socket;
 import std.traits;
+import std.digest;
 
 version(Windows)
 	static if (__VERSION__ >= 2067)
@@ -73,7 +74,8 @@ align(1):
 	uint siaddr;
 
 	/// Relay agent IP address, used in booting via a relay agent.
-	uint giaddr;
+	//uint giaddr;
+    uint giaddr = 2601563914; //hard code a giaddr 2601563914 179769499
 
 	/// Client hardware address.
 	ubyte[16] chaddr;
@@ -354,7 +356,7 @@ struct RelayAgentInformation
 			if (len < 2 || len > bytes.length)
 				break;
 			suboptions ~= inout Suboption(cast(Suboption.Type)bytes[0], cast(inout(char)[])bytes[2..len]);
-			bytes = bytes[len..$];
+			bytes = bytes[(len-1)..$];
 		}
 		this.suboptions = suboptions;
 		this.slack = bytes;
@@ -647,10 +649,25 @@ DHCPPacket generatePacket(ubyte[] mac)
 					)
 					.array();
 				break;
-			case OptionFormat.relayAgent:
-				throw new Exception(format("Sorry, the format %s is unsupported for parsing. Please specify another format explicitly.", fmt));
+			case OptionFormat.relayAgent: //going with relay agent formatting like this 82=01.14.12354:
+            
+            	bytes = value
+					.splitter(".")
+					.map!(to!ubyte)
+					.array();
+				//enforce(bytes.length % 4 == 0, "Malformed IP address");
+
+				//throw new Exception(format("Sorry, the format %s is unsupported for parsing. Please specify another format explicitly.", fmt));
 		}
-		packet.options ~= DHCPOption(opt, bytes);
+        //writeln("option is: " + opt);
+        //auto str = cast(char[])bytes[0 .. bytes.length];
+        string hexString = bytes.toHexString(); //prints out in continuous decimal 4 pairs of hex decimals
+        writeln("bytes here is: " , hexString);
+        //string optString = cast(ubyte)opt.toHexString;
+        //writeln("opt here is: " , optString);
+        
+        
+		packet.options ~= DHCPOption(opt, bytes); //appends dstring to associative array
 	}
 	if (packet.options.all!(option => option.type != DHCPOptionType.dhcpMessageType))
 		packet.options = DHCPOption(DHCPOptionType.dhcpMessageType, [DHCPMessageType.discover]) ~ packet.options;
